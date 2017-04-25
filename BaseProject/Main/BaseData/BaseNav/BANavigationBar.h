@@ -1,0 +1,22 @@
+//
+//  BANavigationBar.h
+//  BaseProject
+//
+//  Created by tyl on 2017/4/24.
+//  Copyright © 2017年 tyl. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface BANavigationBar : UINavigationBar
+
+@property (nonatomic, strong) UIView *bgView;
+
+
+/** 显示导航条背景颜色 */
+- (void)BA_showNaviBar;
+
+/** 隐藏 */
+- (void)BA_hiddenNaviBar;
+
+@end
