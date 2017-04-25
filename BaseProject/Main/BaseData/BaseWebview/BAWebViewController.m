@@ -7,7 +7,6 @@
 //
 
 #import "BAWebViewController.h"
-
 #import <WebKit/WebKit.h>
 
 
@@ -42,8 +41,8 @@
 {
     if (!_progressView)
     {
-        UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
-        progressView.tintColor = BA_Orange_Color;
+        UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
+        progressView.tintColor = BA_Green_Color;
         progressView.trackTintColor = [UIColor whiteColor];
         [self.view addSubview:progressView];
         self.progressView = progressView;
@@ -135,15 +134,15 @@
 #pragma mark 导航栏的关闭按钮
 - (void)configColseItem
 {
-    UIButton *colseBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [colseBtn setTitle:@"关闭" forState:UIControlStateNormal];
-    [colseBtn setTitleColor:BA_Orange_Color forState:UIControlStateNormal];
-    [colseBtn addTarget:self action:@selector(colseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [colseBtn sizeToFit];
-    
-    UIBarButtonItem *colseItem = [[UIBarButtonItem alloc] initWithCustomView:colseBtn];
-    NSMutableArray *newArr = [NSMutableArray arrayWithObjects:self.navigationItem.leftBarButtonItem,colseItem, nil];
-    self.navigationItem.leftBarButtonItems = newArr;
+//    UIButton *colseBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [colseBtn setTitle:@"关闭" forState:UIControlStateNormal];
+//    [colseBtn setTitleColor:BA_Orange_Color forState:UIControlStateNormal];
+//    [colseBtn addTarget:self action:@selector(colseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [colseBtn sizeToFit];
+//    
+//    UIBarButtonItem *colseItem = [[UIBarButtonItem alloc] initWithCustomView:colseBtn];
+//    NSMutableArray *newArr = [NSMutableArray arrayWithObjects:self.navigationItem.leftBarButtonItem,colseItem, nil];
+//    self.navigationItem.leftBarButtonItems = newArr;
 }
 
 #pragma mark - ***** 按钮点击事件
@@ -213,6 +212,7 @@
 {
     // 类似 UIWebView 的- webView:didFailLoadWithError:
     NSLog(@"didFailProvisionalNavigation");
+    [self BA_showAlertWithTitle:@"加载失败!"];
 }
 
 /*! 页面跳转的代理方法有三种，分为（收到跳转与决定是否跳转两种）*/
@@ -271,27 +271,27 @@
  *  @param frame             主窗口
  *  @param completionHandler 警告框消失调用
  */
-//- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler
-//{
-//    //  js 里面的alert实现，如果不实现，网页的alert函数无效  ,
-//
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
-//                                                                             message:nil
-//                                                                      preferredStyle:UIAlertControllerStyleAlert];
-//    [alertController addAction:[UIAlertAction actionWithTitle:@"确定"
-//                                                        style:UIAlertActionStyleDefault
-//                                                      handler:^(UIAlertAction *action) {
-//                                                          completionHandler(YES);
-//                                                      }]];
-//    [alertController addAction:[UIAlertAction actionWithTitle:@"取消"
-//                                                        style:UIAlertActionStyleCancel
-//                                                      handler:^(UIAlertAction *action){
-//                                                          completionHandler(NO);
-//                                                      }]];
-//
-//    [self presentViewController:alertController animated:YES completion:^{}];
-//
-//}
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler
+{
+    //  js 里面的alert实现，如果不实现，网页的alert函数无效  ,
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action) {
+                                                          completionHandler(YES);
+                                                      }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消"
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction *action){
+                                                          completionHandler(NO);
+                                                      }]];
+
+    [self presentViewController:alertController animated:YES completion:^{}];
+
+}
 
 - (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *))completionHandler
 {

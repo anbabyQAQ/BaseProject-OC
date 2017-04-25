@@ -8,6 +8,7 @@
 
 #import "BAHomeViewController.h"
 #import "BAMessageViewController.h"
+#import "DemoWebviewController.h"
 
 @interface BAHomeViewController ()
 
@@ -41,7 +42,10 @@
 //设置右边事件
 -(void)right_button_event:(UIButton*)sender
 {
-    BAMessageViewController *vc = [[BAMessageViewController alloc]init];
+    DemoWebviewController *vc = [[DemoWebviewController alloc]init];
+//    vc.urlString = @"http://m.jd.com/";
+    vc.urlString = @"https://www.baidu.com";
+
     
     [self.navigationController pushViewController:vc animated:YES];
    
