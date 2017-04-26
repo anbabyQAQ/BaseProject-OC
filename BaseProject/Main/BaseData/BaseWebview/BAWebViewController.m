@@ -8,6 +8,7 @@
 
 #import "BAWebViewController.h"
 #import <WebKit/WebKit.h>
+#import <JavaScriptCore/JavaScriptCore.h>
 
 
 
@@ -183,6 +184,10 @@
     // 类似UIWebView的 -webViewDidStartLoad:
     NSLog(@"didStartProvisionalNavigation");
     BASharedApplication.networkActivityIndicatorVisible = YES;
+    
+    if([webView.URL.absoluteString rangeOfString:@"ba_shareFunction://" options:NSCaseInsensitiveSearch].location != NSNotFound){
+        
+    }
 }
 
 #pragma mark 当内容开始返回时调用
@@ -243,10 +248,10 @@
 }
 
 
-//- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
-//{
-//
-//}
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
+{
+
+}
 
 #pragma mark 创建一个新的WebView
 //- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
@@ -261,6 +266,11 @@
 //    _wkWebView2 = [[WKWebView alloc] initWithFrame:self.wkWebView.frame configuration:configuration];
 //    [_wkWebView2 loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
 //}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
 
 #pragma mark 针对于web界面的三种提示框（警告框、确认框、输入框）分别对应三种代理方法。下面只举了警告框的例子。
 /**

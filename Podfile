@@ -11,6 +11,6 @@ target 'BaseProject' do
         pod 'RDVTabBarController', '~> 1.1.9'
         pod 'MBProgressHUD', '~> 1.0.0'
         pod 'MJRefresh', '~> 3.1.12'
-
+        pod 'IQKeyboardManager', '~> 4.0.9'
 
 end

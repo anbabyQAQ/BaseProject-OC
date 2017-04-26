@@ -44,11 +44,32 @@
 {
     DemoWebviewController *vc = [[DemoWebviewController alloc]init];
 //    vc.urlString = @"http://m.jd.com/";
-    vc.urlString = @"https://www.baidu.com";
+   
+//    NSURL *url = [[NSBundle mainBundle] URLForResource:@"index" withExtension:@"html"];
+//    NSURLRequest *reUrl = [NSURLRequest requestWithURL:url];
+    
+
+//    vc.urlString = @"http://192.168.14.68:8080/HumanAnalysis/index.html";
+    vc.urlString = @"http://192.168.14.68:8080/HumanAnalysis/view/map.html";
 
     
     [self.navigationController pushViewController:vc animated:YES];
    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [BaseNetManager ba_requestWithType:BAHttpRequestTypeGet urlString:@"http://192.9.100.76:60001/mts-ci/v250/tag/feed/13311097869" parameters:nil successBlock:^(id response) {
+        
+//        completionHandle([BAVideoModel BAMJParse:response], nil);
+        
+    } failureBlock:^(NSError *error) {
+        
+        BALog(@"error：%@", error);
+//        completionHandle(nil, error);
+        
+    } progress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+        
+    }];
 }
 
 
