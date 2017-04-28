@@ -40,5 +40,8 @@
 /*! 获取图片资源 */
 #define BA_GetImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]
 
+
+#define FirstLogin  @"firstlogin"
+
 #endif /* BaseDefin_h */
 

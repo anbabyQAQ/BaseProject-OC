@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AppDelegate+TabVC.h"
-
+#import "LoginViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -19,8 +19,73 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    //初始化根控制器
     [self initWithTabVC];
+
+    /*! 键盘处理 */
+    [self BA_KeyboardSetting];
+    
+    
+    //网络监听
+    [self netWorkMonitoring];
+    
     return YES;
+}
+
+- (void)netWorkMonitoring{
+    [BaseNetManager ba_startNetWorkMonitoringWithBlock:^(BANetworkStatus status) {
+        switch (status)
+        {
+            case BANetworkStatusUnknown:
+                NSLog(@"未知网络");
+                
+                break;
+            case BANetworkStatusNotReachable:
+                NSLog(@"没有网络");
+                
+                break;
+            case BANetworkStatusReachableViaWWAN:
+                NSLog(@"手机自带网络");
+                
+                break;
+            case BANetworkStatusReachableViaWiFi:
+                NSLog(@"wifi 网络");
+                
+                break;
+        }
+    }];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifi:) name:AFNetworkingReachabilityDidChangeNotification object:nil];  
+}
+- (void)notifi:(NSNotification *)noti{
+    NSDictionary *dic = noti.userInfo;
+    
+    BAWeak;
+    //获取网络状态
+    NSInteger status = [[dic objectForKey:@"AFNetworkingReachabilityNotificationStatusItem"] integerValue];
+    
+    if(status == AFNetworkReachabilityStatusNotReachable) {
+        //无网络连接
+        [weakSelf BA_showAlertWithTitle:@"无网络连接"];
+    }else if (status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN) {
+        //蜂窝网络或者Wi-Fi连接
+//        [weakSelf BA_showAlertWithTitle:@"无网络连接"];
+    }
+}
+
+#pragma mark - ***** 键盘处理
+- (void)BA_KeyboardSetting
+{
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = YES;
+    
+    /*! 如果某个VC不想用IQkeyboard，就在这里用这两行代码把那个VC加进去就行，那个VC就可以用自己写的键盘代理 */
+    //    [[IQKeyboardManager sharedManager] disableDistanceHandlingInViewControllerClass:[DemoVC6 class]];
+    //    [[IQKeyboardManager sharedManager] disableToolbarInViewControllerClass:[DemoVC6 class]];
+    
+    
 }
 
 

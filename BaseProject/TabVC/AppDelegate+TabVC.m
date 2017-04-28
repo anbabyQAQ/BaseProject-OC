@@ -14,17 +14,31 @@
 #import "BAHomeViewController.h"
 #import "BAMessageViewController.h"
 #import "BAProfileViewController.h"
+#import "LoginViewController.h"
 
 @implementation AppDelegate (TabVC)
 
 - (void)initWithTabVC{
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    [self setupViewControllers];
-    [self.window setRootViewController:self.viewController];
-    [self.window makeKeyAndVisible];
     
+    
+    BOOL isLogin = [BA_UserDefault objectForKey:FirstLogin];
+    if (!isLogin) {
+        //第一次登录处理
+        LoginViewController *loginVC = [[LoginViewController alloc]init];
+        self.navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        self.window.rootViewController = self.navController;
+        [self.window makeKeyAndVisible];
+    }else{
+        [self setupViewControllers];
+        [self.window setRootViewController:self.viewController];
+        [self.window makeKeyAndVisible];
+    }
+
     [self customizeInterface];
+    
 }
 
 #pragma mark - ***** 使用RDVTabBarController 设置

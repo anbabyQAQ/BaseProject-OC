@@ -22,11 +22,11 @@
     
     self.title = @"shouye";
     
-    self.tableView.backgroundColor = [UIColor cyanColor];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.frame = CGRectMake(0, 0, BA_SCREEN_WIDTH, BA_SCREEN_HEIGHT);
-    self.isOpenHeaderRefresh = YES;
-    self.isOpenFooterRefresh = YES;
+//    self.tableView.backgroundColor = [UIColor cyanColor];
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//    self.tableView.frame = CGRectMake(0, 0, BA_SCREEN_WIDTH, BA_SCREEN_HEIGHT);
+//    self.isOpenHeaderRefresh = YES;
+//    self.isOpenFooterRefresh = YES;
 }
 
 //设置右边按键（如果没有右边 可以不重写）
@@ -58,18 +58,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [BaseNetManager ba_requestWithType:BAHttpRequestTypeGet urlString:@"http://192.9.100.76:60001/mts-ci/v250/tag/feed/13311097869" parameters:nil successBlock:^(id response) {
-        
-//        completionHandle([BAVideoModel BAMJParse:response], nil);
-        
-    } failureBlock:^(NSError *error) {
-        
-        BALog(@"error：%@", error);
-//        completionHandle(nil, error);
-        
-    } progress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
-        
-    }];
+//    [BaseNetManager ba_requestWithType:BAHttpRequestTypeGet urlString:@"http://192.9.100.76:60001/mts-ci/v250/tag/feed/13311097869" parameters:nil successBlock:^(id response) {
+//        
+////        completionHandle([BAVideoModel BAMJParse:response], nil);
+//        
+//    } failureBlock:^(NSError *error) {
+//        
+//        BALog(@"error：%@", error);
+////        completionHandle(nil, error);
+//        
+//    } progress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+//        
+//    }];
 }
 
 

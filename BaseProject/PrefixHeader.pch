@@ -67,6 +67,10 @@
 #import "NSString+BAColor.h"
 #import "NSString+NSNumber.h"
 #import "NSString+Trims.h"
+#import "IQKeyboardManager.h"
+#import "AppDelegate.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "BAAlertView.h"
 
 
 #endif /* PrefixHeader_pch */

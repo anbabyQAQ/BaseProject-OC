@@ -150,8 +150,10 @@ static NSMutableArray *tasks;
 + (BAURLSessionTask *)ba_requestWithType:(BAHttpRequestType)type
                                urlString:(NSString *)urlString
                               parameters:(NSDictionary *)parameters
+                      networkStatusBlock:(BANetworkStatusBlock)networkStatusBlock
                             successBlock:(BAResponseSuccess)successBlock
                             failureBlock:(BAResponseFail)failureBlock
+                            timeoutBlock:(BAResponseTimeout)timeoutBlock
                                 progress:(BADownloadProgress)progress
 {
     if (urlString == nil)
@@ -160,6 +162,7 @@ static NSMutableArray *tasks;
     }
     
     BAWeak;
+
     /*! 检查地址中是否有中文 */
     NSString *URLString = [NSURL URLWithString:urlString] ? urlString : [self strUTF8Encoding:urlString];
     
@@ -213,9 +216,15 @@ static NSMutableArray *tasks;
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            if (failureBlock)
-            {
-                failureBlock(error);
+            if(error.code==-1001){
+                if (timeoutBlock) {
+                    timeoutBlock(error);
+                }
+            }else {
+                if (failureBlock)
+                {
+                    failureBlock(error);
+                }
             }
             [[weakSelf tasks] removeObject:sessionTask];
             

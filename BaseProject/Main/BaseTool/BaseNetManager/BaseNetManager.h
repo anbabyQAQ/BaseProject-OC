@@ -67,6 +67,8 @@ typedef void(^BANetworkStatusBlock)(BANetworkStatus status);
 typedef void( ^ BAResponseSuccess)(id response);
 /*! 定义请求失败的 block */
 typedef void( ^ BAResponseFail)(NSError *error);
+/*! 定义请求超时的 block */
+typedef void( ^ BAResponseTimeout)(NSError *error);
 
 /*! 定义上传进度 block */
 typedef void( ^ BAUploadProgress)(int64_t bytesProgress,
@@ -111,8 +113,10 @@ typedef NSURLSessionTask BAURLSessionTask;
 + (BAURLSessionTask *)ba_requestWithType:(BAHttpRequestType)type
                                urlString:(NSString *)urlString
                               parameters:(NSDictionary *)parameters
+                    networkStatusBlock:(BANetworkStatusBlock)networkStatusBlock
                             successBlock:(BAResponseSuccess)successBlock
                             failureBlock:(BAResponseFail)failureBlock
+                            timeoutBlock:(BAResponseTimeout)timeoutBlock
                                 progress:(BADownloadProgress)progress;
 
 /*!
