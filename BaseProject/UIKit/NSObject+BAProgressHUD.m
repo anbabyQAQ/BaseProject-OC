@@ -43,7 +43,7 @@
         
         progressHUD.mode = MBProgressHUDModeIndeterminate;
         progressHUD.labelText = text;
-        progressHUD.color = BA_LightGray_Color;
+        progressHUD.color = BA_DarkGray_Color;
         
         //        [progressHUD hide:YES afterDelay:1.5];
     });
@@ -63,6 +63,8 @@
         
         progressHUD.mode = MBProgressHUDModeText;
         progressHUD.labelText = text;
+        progressHUD.color = BA_DarkGray_Color;
+
         //        progressHUD.color = BA_Orange_Color;
         //        if (!time || time == 0)
         //        {
@@ -80,7 +82,7 @@
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [MBProgressHUD hideAllHUDsForView:[self getCurrentView] animated:YES];
         MBProgressHUD *progressHUD = [MBProgressHUD showHUDAddedTo:[weakSelf getCurrentView] animated:YES];
-        progressHUD.color = BA_LightGray_Color;
+        progressHUD.color = BA_DarkGray_Color;
         // 最长显示30秒
         [progressHUD hide:YES afterDelay:30];
     }];

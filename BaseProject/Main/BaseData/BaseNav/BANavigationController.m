@@ -37,7 +37,7 @@
     //    [bar setBarTintColor:BA_White_Color];
     //    [bar setTranslucent:NO]; // 半透明
     
-    bar.barTintColor = BA_Red_Color;
+    bar.barTintColor = BA_Gray_Color;
     
     // 去掉导航分割线
     [bar setShadowImage:[UIImage new]];

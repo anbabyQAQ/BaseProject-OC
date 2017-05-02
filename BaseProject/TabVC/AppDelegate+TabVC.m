@@ -28,7 +28,7 @@
     if (!isLogin) {
         //第一次登录处理
         LoginViewController *loginVC = [[LoginViewController alloc]init];
-        self.navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        self.navController = [[BANavigationController alloc] initWithRootViewController:loginVC];
         self.window.rootViewController = self.navController;
         [self.window makeKeyAndVisible];
     }else{

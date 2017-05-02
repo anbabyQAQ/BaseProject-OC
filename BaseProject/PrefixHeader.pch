@@ -71,6 +71,7 @@
 #import "AppDelegate.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "BAAlertView.h"
+#import "Masonry.h"
 
 
 #endif /* PrefixHeader_pch */

@@ -50,9 +50,13 @@
     
 
 //    vc.urlString = @"http://192.168.14.68:8080/HumanAnalysis/index.html";
-    vc.urlString = @"http://192.168.14.68:8080/HumanAnalysis/view/map.html";
-
+    vc.urlString = @"http://192.168.18.248:8081/mts/testapp/index.html";
     
+    
+//    NSString* path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+//    NSURL* url = [NSURL fileURLWithPath:path];
+//    vc.urlString = url.absoluteString;
+
     [self.navigationController pushViewController:vc animated:YES];
    
 }

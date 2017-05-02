@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "PostLoginThread.h"
+#import "ForgetPasswordViewController.h"
 
 @interface LoginViewController ()
 
@@ -54,8 +55,8 @@
     self.title = @"登录";
    
     [self setUpUI];
-//    self.tfName.phoneRestrict = YES;
-//    self.tfName.textfieldStyle = BATextfieldStylePhone;
+    self.tfName.phoneRestrict = YES;
+    self.tfName.textfieldStyle = BATextfieldStylePhone;
 
   
     RACSignal *usernameSignal = [self.tfName.rac_textSignal map:^id(NSString *text) {
@@ -97,6 +98,7 @@
     [[self.btPsw rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
          NSLog(@"button clicked");
+         [self ForgetPsw];
      }];
     
     
@@ -120,10 +122,14 @@
 - (void)ForgetPsw{
   //忘记密码
     
+    ForgetPasswordViewController *forgetVC = [[ForgetPasswordViewController alloc]init];
+    [self.navigationController pushViewController:forgetVC animated:YES];
+    
 }
 
 - (void)goToLoginSuccessVC {
-
+    [BA_UserDefault setBool:YES forKey:FirstLogin];
+    [APPDelegate initWithTabVC];
 }
 
 - (void)setUpUI{
@@ -135,7 +141,9 @@
     self.myScrollView.backgroundColor = KRGBA(220, 220, 220, 1);
     [self.view addSubview:self.myScrollView];
     
+    
     [self setSubviewsLayout];
+    
     
     _tfName.clearButtonMode = UITextFieldViewModeWhileEditing;
     _tfPsw.clearButtonMode  = UITextFieldViewModeWhileEditing;
@@ -157,40 +165,57 @@
 // 调用API属于逻辑范畴，和UI无关
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password complete:(void (^)(BOOL))loginResult {
     BAWeak;
+    
+    if (![weakSelf isValidPhoneNumber:username]) {
+        [BAAlertView showTitle:@"提 示" message:@"查看输入电话号码格式是否正确！"];
+        loginResult(NO);
+        return;
+    }
+    if (![weakSelf isValidPasswordQualified:password]) {
+        [BAAlertView showTitle:@"提 示" message:@"查看输入密码是否以字母开头，长度在6-18之间，只能包含字符、数字和下划线！"];
+        loginResult(NO);
+        return;
+    }
 
-    if ([BARegularExpression ba_isPhoneNumber:username]) {
-        if ([BARegularExpression ba_isPasswordQualified:password]) {
             
-            [PostLoginThread postLoginDataWithParameters:@{@"mdn":username,@"password":password}
-                                                    prev:^{
-                                                        [weakSelf BA_showAlert:@"正在加载数据"];
+    [PostLoginThread postLoginDataWithParameters:@{@"mdn":username,@"password":password}
+                                            prev:^{
+                                                [weakSelf BA_showAlert:@"正在加载数据"];
+                                                
+                                            } success:^(id model) {
+                                                [weakSelf BA_hideProgress];
+                                                loginResult(YES);
+                                                
+                                                [weakSelf BA_showAlertWithTitle:@"请求成功！"];
+                                            } unavaliableNetwork:^{
+                                                [weakSelf BA_hideProgress];
+                                                loginResult(NO);
+                                                
+                                                [weakSelf BA_showAlertWithTitle:@"无网络状态！"];
+                                            } timeout:^{
+                                                [weakSelf BA_hideProgress];
+                                                loginResult(NO);
+                                                
+                                                [weakSelf BA_showAlertWithTitle:@"网络超时！"];
+                                            } exception:^(NSError *error) {
+                                                [weakSelf BA_hideProgress];
+                                                loginResult(NO);
+                                                
+                                                [weakSelf BA_showAlertWithTitle:[NSString stringWithFormat:@"%@",error]];
+                                                
+                                            }];
+}
 
-                                                    } success:^(id model) {
-                                                        [weakSelf BA_hideProgress];
-                                                        loginResult(YES);
-                                                    } unavaliableNetwork:^{
-                                                        [weakSelf BA_hideProgress];
-                                                        loginResult(NO);
+#pragma mark - isValid Methods
+- (BOOL) isValidPhoneNumber:(NSString *)phoneNumber{
+    //保留纯数字 ： [phoneNumber ba_removeStringSaveNumber]
 
-                                                        [weakSelf BA_showAlertWithTitle:@"无网络状态！"];
-                                                    } timeout:^{
-                                                        [weakSelf BA_hideProgress];
-                                                        loginResult(NO);
+    return  [BARegularExpression ba_isPhoneNumber:[phoneNumber ba_removeStringSaveNumber]];
+}
 
-                                                        [weakSelf BA_showAlertWithTitle:@"网络超时！"];
-                                                    } exception:^(NSError *error) {
-                                                        [weakSelf BA_hideProgress];
-                                                        loginResult(NO);
+- (BOOL) isValidPasswordQualified:(NSString *)password{
 
-                                                        [weakSelf BA_showAlertWithTitle:[NSString stringWithFormat:@"%@",error]];
-
-                                                    }];        
-        }else{
-             [BAAlertView showTitle:@"提 示" message:@"查看输入密码是否以字母开头，长度在6-18之间，只能包含字符、数字和下划线！"];
-        }}else{
-            [BAAlertView showTitle:@"提 示" message:@"查看输入电话号码格式是否正确！"];
-
-        }
+    return [BARegularExpression ba_isPasswordQualified:password];
 }
 
 #pragma mark - Private Methods
@@ -206,37 +231,67 @@
     self.iconImageView.layer.masksToBounds = YES;
     self.iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.iconImageView.layer.cornerRadius = 6.f;
-    self.iconImageView.frame = CGRectMake((BA_SCREEN_WIDTH - 100) / 2, 70, 100, 100);
     [self.myScrollView addSubview:self.iconImageView];
+    
+    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(70);
+        make.width.height.mas_equalTo(100);
+        make.centerX.mas_equalTo(self.view);
+    }];
     
     // 账号标题
     self.accountTitle = [[UILabel alloc] init];
     self.accountTitle.text = @"账号";
     self.accountTitle.textColor = [UIColor darkGrayColor];
-    self.accountTitle.frame = CGRectMake(20, self.iconImageView.bottom + 50, 80, 30);
     [self.myScrollView addSubview:self.accountTitle];
+    
+    [self.accountTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.iconImageView.mas_bottom).offset(50);
+        make.left.mas_equalTo(20);
+        make.width.mas_equalTo(80);
+        make.height.mas_equalTo(30);
+    }];
     
     // 账号
     self.tfName = [[BATextField alloc] init];
     self.tfName.textColor = [UIColor darkGrayColor];
     self.tfName.placeholder = @"请输入手机号";
     self.tfName.keyboardType = UIKeyboardTypeNumberPad;
-//    self.tfName.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.tfName.frame = CGRectMake(100, self.accountTitle.frame.origin.y, BA_SCREEN_WIDTH - 140, 30);
     [self.myScrollView addSubview:self.tfName];
+    
+    [self.tfName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.accountTitle);
+        make.left.mas_equalTo(self.accountTitle.mas_right);
+        make.width.mas_equalTo(BA_SCREEN_WIDTH - 140);
+        make.height.mas_equalTo(30);
+    }];
     
     // 第一条分割线
     self.firstSegLine = [[UIView alloc] init];
     self.firstSegLine.backgroundColor = KRGBA(128, 128, 128, 1);
-    self.firstSegLine.frame = CGRectMake(0, self.accountTitle.frame.origin.y + 40, BA_SCREEN_WIDTH, 0.5);
     [self.myScrollView addSubview:self.firstSegLine];
+    
+    [self.firstSegLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.accountTitle.mas_bottom);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(BA_SCREEN_WIDTH);
+        make.height.mas_equalTo(0.5);
+    }];
+
     
     // 密码标题
     self.PswTitle = [[UILabel alloc] init];
     self.PswTitle.text = @"密码";
     self.PswTitle.textColor = [UIColor darkGrayColor];
-    self.PswTitle.frame = CGRectMake(20, self.firstSegLine.frame.origin.y + 11, 80, 30);
     [self.myScrollView addSubview:self.PswTitle];
+    
+    
+    [self.PswTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.firstSegLine.mas_bottom).offset(11);
+        make.left.mas_equalTo(20);
+        make.width.mas_equalTo(80);
+        make.height.mas_equalTo(30);
+    }];
     
     // 密码
     self.tfPsw = [[BATextField alloc] init];
@@ -244,22 +299,39 @@
     self.tfPsw.placeholder = @"请输入密码";
     self.tfPsw.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.tfPsw.secureTextEntry = YES;
-    self.tfPsw.frame = CGRectMake(100, self.PswTitle.frame.origin.y, BA_SCREEN_WIDTH - 140, 30);
     [self.myScrollView addSubview:self.tfPsw];
+    
+    [self.tfPsw mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.PswTitle.mas_top);
+        make.left.mas_equalTo(self.PswTitle.mas_right);
+        make.width.mas_equalTo(BA_SCREEN_WIDTH - 140);
+        make.height.mas_equalTo(30);
+    }];
     
     // 密码右侧的眼睛
     self.isVisiableBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    self.isVisiableBtn.frame = CGRectMake(BA_SCREEN_WIDTH - 44 - 8, self.tfPsw.frame.origin.y, 44, 30);
     [self.isVisiableBtn setImage:[UIImage imageNamed:@"yanjing.jpg"] forState:(UIControlStateNormal)];
-//    [self.isVisiableBtn addTarget:self action:@selector(isVisiableAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.myScrollView addSubview:self.isVisiableBtn];
+    
+    [self.isVisiableBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.tfPsw.mas_top);
+        make.left.mas_equalTo(BA_SCREEN_WIDTH - 44 - 8);
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(30);
+    }];
     
     // 第二条分割线
     self.secondSegLine = [[UIView alloc] init];
     self.secondSegLine.backgroundColor = KRGBA(128, 128, 128, 1);
-    self.secondSegLine.frame = CGRectMake(0, self.PswTitle.frame.origin.y + 40, BA_SCREEN_WIDTH, 0.5);
     [self.myScrollView addSubview:self.secondSegLine];
     
+    
+    [self.secondSegLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.tfPsw.mas_bottom);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(BA_SCREEN_WIDTH);
+        make.height.mas_equalTo(0.5);
+    }];
     
     // 忘记密码按钮
     self.btPsw = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -267,8 +339,15 @@
     [self.btPsw setTitle:@"忘记密码？" forState:(UIControlStateNormal)];
     self.btPsw.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.btPsw setTitleColor:[UIColor colorWithHexString:@"e97300"] forState:(UIControlStateNormal)];
-    self.btPsw.frame = CGRectMake(BA_SCREEN_WIDTH-15-74, self.secondSegLine.bottom+21, 74, 31);
     [self.myScrollView addSubview:self.btPsw];
+    
+    
+    [self.btPsw mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.tfPsw.mas_bottom);
+        make.left.mas_equalTo(BA_SCREEN_WIDTH-15-74);
+        make.width.mas_equalTo(74);
+        make.height.mas_equalTo(31);
+    }];
     
     // 登录按钮
     self.btLogin = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -276,8 +355,14 @@
     [self.btLogin setTitle:@"登录" forState:(UIControlStateNormal)];
     [self.btLogin setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     self.btLogin.layer.cornerRadius = 6.f;
-    self.btLogin.frame = CGRectMake(20, self.btPsw.bottom + 21, BA_SCREEN_WIDTH - 40, 44);
     [self.myScrollView addSubview:self.btLogin];
+    
+    [self.btLogin mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.btPsw.mas_bottom).offset(21);
+        make.left.mas_equalTo(20);
+        make.width.mas_equalTo(BA_SCREEN_WIDTH - 40);
+        make.height.mas_equalTo(44);
+    }];
 
     self.myScrollView.contentSize = CGSizeMake(BA_SCREEN_WIDTH, BA_SCREEN_HEIGHT);
 }
@@ -285,11 +370,11 @@
 // 这两个判断都属于逻辑范畴，和UI无关
 - (BOOL)isValidUsername:(NSString *)username {
 
-    return username.length == 11;
+    return username.length == 13;
 }
 
 - (BOOL)isValidPassword:(NSString *)password {
-    return password.length > 0;
+    return password.length >= 6 && password.length<=18;
 }
 
 - (void)setLoginBackColor:(BOOL)islogin {

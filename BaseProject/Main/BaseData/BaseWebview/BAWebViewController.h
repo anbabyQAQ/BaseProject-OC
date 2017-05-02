@@ -7,9 +7,17 @@
 //
 
 #import "BaseViewController.h"
+#import <JavaScriptCore/JavaScriptCore.h>
 
-@interface BAWebViewController : BaseViewController
+@protocol JSObjcDelegate <JSExport>
+- (void)call;
+- (void)getCall:(NSString *)callString;
+
+@end
+
+@interface BAWebViewController : BaseViewController<JSObjcDelegate>
 
 @property (nonatomic, strong) NSString *urlString;
+@property (nonatomic, strong) JSContext *jsContext;
 
 @end

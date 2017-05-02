@@ -12,8 +12,9 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) UIViewController  *viewController;
-@property (strong, nonatomic) UINavigationController *navController;
+@property (strong, nonatomic) BANavigationController *navController;
 
+- (void)initWithTabVC;
 
 @end
 
