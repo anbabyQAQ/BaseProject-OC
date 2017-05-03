@@ -184,6 +184,11 @@
                                                 
                                             } success:^(id model) {
                                                 [weakSelf BA_hideProgress];
+                                                NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"isLogin", nil];
+                                                NSNotification *notification = [NSNotification notificationWithName:BANotioKey_LoginFinish object:nil userInfo:dict];
+                                                
+                                                [BA_NotiCenter postNotification:notification];
+
                                                 loginResult(YES);
                                                 
                                                 [weakSelf BA_showAlertWithTitle:@"请求成功！"];
@@ -257,6 +262,7 @@
     self.tfName.textColor = [UIColor darkGrayColor];
     self.tfName.placeholder = @"请输入手机号";
     self.tfName.keyboardType = UIKeyboardTypeNumberPad;
+    self.tfName.font = BA_FontSize(15);
     [self.myScrollView addSubview:self.tfName];
     
     [self.tfName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -287,7 +293,7 @@
     
     
     [self.PswTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.firstSegLine.mas_bottom).offset(11);
+        make.top.mas_equalTo(self.firstSegLine.mas_bottom).offset(20);
         make.left.mas_equalTo(20);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(30);
@@ -299,6 +305,7 @@
     self.tfPsw.placeholder = @"请输入密码";
     self.tfPsw.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.tfPsw.secureTextEntry = YES;
+    self.tfPsw.font = BA_FontSize(15);
     [self.myScrollView addSubview:self.tfPsw];
     
     [self.tfPsw mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -327,7 +334,7 @@
     
     
     [self.secondSegLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.tfPsw.mas_bottom);
+        make.top.mas_equalTo(self.tfPsw.mas_bottom).mas_offset(1);
         make.left.mas_equalTo(0);
         make.width.mas_equalTo(BA_SCREEN_WIDTH);
         make.height.mas_equalTo(0.5);
@@ -343,7 +350,7 @@
     
     
     [self.btPsw mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.tfPsw.mas_bottom);
+        make.top.mas_equalTo(self.secondSegLine.mas_bottom).mas_offset(5);
         make.left.mas_equalTo(BA_SCREEN_WIDTH-15-74);
         make.width.mas_equalTo(74);
         make.height.mas_equalTo(31);

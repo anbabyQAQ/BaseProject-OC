@@ -31,10 +31,8 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     [self configUI];
-    [self configBackItem];
+//    [self configBackItem];
     [self configMenuItem];
-    
-    
 }
 
 #pragma mark - ***** 进度条
@@ -74,26 +72,36 @@
         webView.dataDetectorTypes = YES;
         
         [self.view insertSubview:webView belowSubview:_progressView];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlString]];
-        [webView loadRequest:request];
+    
         self.webView = webView;
 
+}
+
+- (void)loadRequest:(NSString *)url{
+    _urlString = url;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlString]];
+    [self.webView loadRequest:request];
 }
 
 #pragma mark 导航栏的返回按钮
 - (void)configBackItem
 {
-    UIImage *backImage = [UIImage imageNamed:@"navigationbar_back"];
-    backImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIButton *backBtn = [[UIButton alloc] init];
-    [backBtn setTintColor:BA_Orange_Color];
-    [backBtn setBackgroundImage:backImage forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(backBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [backBtn sizeToFit];
-    
-    UIBarButtonItem *colseItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = colseItem;
+    if (self.webView.canGoBack) {
+        if (self.navigationItem.leftBarButtonItems == nil) {
+            UIImage *backImage = [UIImage imageNamed:@"navigationbar_back"];
+            backImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIButton *backBtn = [[UIButton alloc] init];
+            [backBtn setTintColor:BA_Orange_Color];
+            [backBtn setBackgroundImage:backImage forState:UIControlStateNormal];
+            [backBtn addTarget:self action:@selector(backBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+            [backBtn sizeToFit];
+            
+            UIBarButtonItem *colseItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+            self.navigationItem.leftBarButtonItem = colseItem;
+        }
+    }else{
+        self.navigationItem.leftBarButtonItem = nil;
+    }
 }
 
 #pragma mark 导航栏的菜单按钮
@@ -114,40 +122,22 @@
 #pragma mark 导航栏的关闭按钮
 - (void)configColseItem
 {
-//    UIButton *colseBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [colseBtn setTitle:@"关闭" forState:UIControlStateNormal];
-//    [colseBtn setTitleColor:BA_Orange_Color forState:UIControlStateNormal];
-//    [colseBtn addTarget:self action:@selector(colseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [colseBtn sizeToFit];
-//    
-//    UIBarButtonItem *colseItem = [[UIBarButtonItem alloc] initWithCustomView:colseBtn];
-//    NSMutableArray *newArr = [NSMutableArray arrayWithObjects:self.navigationItem.leftBarButtonItem,colseItem, nil];
-//    self.navigationItem.leftBarButtonItems = newArr;
+    self.navigationItem.leftBarButtonItems = nil;
 }
 
 #pragma mark - ***** 按钮点击事件
 #pragma mark 返回按钮点击
 - (void)backBtnAction:(UIButton *)sender
 {
-//    if (IOS8x) {
-//        if (self.wkWebView.canGoBack) {
-//            [self.wkWebView goBack];
-//            if (self.navigationItem.leftBarButtonItems.count == 1) {
-//                [self configColseItem];
-//            }
-//        }else {
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//    }else {
-        if (self.webView.canGoBack) {
-            [self.webView goBack];
-            if (self.navigationItem.leftBarButtonItems.count == 1) {
-                [self configColseItem];
-            }
-        }else {
-            [self.navigationController popViewControllerAnimated:YES];
+    if (self.webView.canGoBack) {
+        [self.webView goBack];
+        if (self.navigationItem.leftBarButtonItems.count == 1) {
+            [self configColseItem];
         }
-//    }
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
 }
 
 #pragma mark 关闭按钮点击
@@ -250,18 +240,18 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     self.loadCount ++;
+    
+
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [self configBackItem];
+
     self.loadCount --;
     BASharedApplication.networkActivityIndicatorVisible = NO;
     self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     
-    // 获取内容高度
-//    CGFloat height =  [[webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.scrollHeight"] intValue];
-//    
-//    NSLog(@"html 的高度：%f", height);
     
     self.jsContext = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     self.jsContext[@"clientFunction"] = self;
@@ -270,6 +260,13 @@
         NSLog(@"异常信息：%@", exceptionValue);
     };
 }
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+   
+    return YES;
+    
+}
+
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {

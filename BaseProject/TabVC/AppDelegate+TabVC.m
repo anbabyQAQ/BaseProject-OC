@@ -20,10 +20,6 @@
 
 - (void)initWithTabVC{
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    
-    
     BOOL isLogin = [BA_UserDefault objectForKey:FirstLogin];
     if (!isLogin) {
         //第一次登录处理

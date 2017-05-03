@@ -20,63 +20,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"shouye";
+    self.title = @"首页";
     
-//    self.tableView.backgroundColor = [UIColor cyanColor];
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//    self.tableView.frame = CGRectMake(0, 0, BA_SCREEN_WIDTH, BA_SCREEN_HEIGHT);
-//    self.isOpenHeaderRefresh = YES;
-//    self.isOpenFooterRefresh = YES;
-}
-
-//设置右边按键（如果没有右边 可以不重写）
--(UIButton*)set_rightButton
-{
-    UIButton *right_button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 65, 22)];
-    [right_button setTitle:@"出错效果" forState:UIControlStateNormal];
-    right_button.titleLabel.font=BA_FontSize(14);
-    [right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    return right_button;
-}
-
-//设置右边事件
--(void)right_button_event:(UIButton*)sender
-{
-    DemoWebviewController *vc = [[DemoWebviewController alloc]init];
-//    vc.urlString = @"http://m.jd.com/";
-   
-//    NSURL *url = [[NSBundle mainBundle] URLForResource:@"index" withExtension:@"html"];
-//    NSURLRequest *reUrl = [NSURLRequest requestWithURL:url];
-    
-
-//    vc.urlString = @"http://192.168.14.68:8080/HumanAnalysis/index.html";
-    vc.urlString = @"http://192.168.18.248:8081/mts/testapp/index.html";
+    //    vc.urlString = @"http://192.168.14.68:8080/HumanAnalysis/index.html";
+//    vc.urlString = @"http://192.168.18.248:8081/mts/testapp/index.html";
     
     
-//    NSString* path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-//    NSURL* url = [NSURL fileURLWithPath:path];
-//    vc.urlString = url.absoluteString;
+    //    NSString* path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+    //    NSURL* url = [NSURL fileURLWithPath:path];
+    //    vc.urlString = url.absoluteString;
+    self.urlString = @"http://192.168.18.248:8081/mts/testapp/index.html";
+    [self loadRequest:self.urlString];
 
-    [self.navigationController pushViewController:vc animated:YES];
-   
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [BaseNetManager ba_requestWithType:BAHttpRequestTypeGet urlString:@"http://192.9.100.76:60001/mts-ci/v250/tag/feed/13311097869" parameters:nil successBlock:^(id response) {
-//        
-////        completionHandle([BAVideoModel BAMJParse:response], nil);
-//        
-//    } failureBlock:^(NSError *error) {
-//        
-//        BALog(@"error：%@", error);
-////        completionHandle(nil, error);
-//        
-//    } progress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
-//        
-//    }];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -119,32 +119,81 @@
     @weakify(self);
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
     
-        RACSignal *signal = [[[RACSignal interval:1 onScheduler:[RACScheduler mainThreadScheduler]]
-                              take:self.remainSeconds+1]
-                             map:^id(NSDate* value) {
-                                 NSString *text;
-                                 if(self.remainSeconds > 0 && self.startCheckTimer){
-                                     self.remainSeconds = self.remainSeconds - 1;
-                                     if(self.remainSeconds == 0){
-                                         self.startCheckTimer = 0;
-                                     }
-                                     text = [NSString stringWithFormat:@"%lds重新获取",self.remainSeconds];
-                                 }else{
-                                     text  = [NSString stringWithFormat:@"获取验证码"];
-                                     [subscriber sendNext:@(YES)];
-                                     [subscriber sendCompleted];
-                                 }
-                                 return text;
-                             }];
-        [signal subscribeNext:^(NSString* x) {
-            @strongify(self);
-            [self.btGetCode setTitle:x forState:(UIControlStateNormal)];
+        [self sendWithUsername:self.tfName.text complete:^(BOOL success) {
+            
+            if (success) {
+                RACSignal *signal = [[[RACSignal interval:1 onScheduler:[RACScheduler mainThreadScheduler]]
+                                      take:self.remainSeconds+1]
+                                     map:^id(NSDate* value) {
+                                         NSString *text;
+                                         if(self.remainSeconds > 0 && self.startCheckTimer){
+                                             self.remainSeconds = self.remainSeconds - 1;
+                                             if(self.remainSeconds == 0){
+                                                 self.startCheckTimer = 0;
+                                             }
+                                             text = [NSString stringWithFormat:@"%lds重新获取",self.remainSeconds];
+                                         }else{
+                                             text  = [NSString stringWithFormat:@"获取验证码"];
+                                             [subscriber sendNext:@(YES)];
+                                             [subscriber sendCompleted];
+                                         }
+                                         return text;
+                                     }];
+                [signal subscribeNext:^(NSString* x) {
+                    @strongify(self);
+                    [self.btGetCode setTitle:x forState:(UIControlStateNormal)];
+                }];
+            }else{
+                [subscriber sendNext:@(success)];
+                [subscriber sendCompleted];
+            }
+           
         }];
         
         return nil;
         
     }];
 
+}
+
+// 调用API属于逻辑范畴，和UI无关
+- (void)sendWithUsername:(NSString *)username complete:(void (^)(BOOL))loginResult {
+    BAWeak;
+    
+    if (![weakSelf isValidPhoneNumber:username]) {
+        [BAAlertView showTitle:@"提 示" message:@"查看输入电话号码格式是否正确！"];
+        loginResult(NO);
+        return;
+    }
+    
+    loginResult(YES);
+    
+//    [PostLoginThread postLoginDataWithParameters:@{@"mdn":username,@"password":password}
+//                                            prev:^{
+//                                                [weakSelf BA_showAlert:@"正在加载数据"];
+//                                                
+//                                            } success:^(id model) {
+//                                                [weakSelf BA_hideProgress];
+//                                                loginResult(YES);
+//                                                
+//                                                [weakSelf BA_showAlertWithTitle:@"请求成功！"];
+//                                            } unavaliableNetwork:^{
+//                                                [weakSelf BA_hideProgress];
+//                                                loginResult(NO);
+//                                                
+//                                                [weakSelf BA_showAlertWithTitle:@"无网络状态！"];
+//                                            } timeout:^{
+//                                                [weakSelf BA_hideProgress];
+//                                                loginResult(NO);
+//                                                
+//                                                [weakSelf BA_showAlertWithTitle:@"网络超时！"];
+//                                            } exception:^(NSError *error) {
+//                                                [weakSelf BA_hideProgress];
+//                                                loginResult(NO);
+//                                                
+//                                                [weakSelf BA_showAlertWithTitle:[NSString stringWithFormat:@"%@",error]];
+//                                                
+//                                            }];
 }
 
 - (void)sendSuccess{

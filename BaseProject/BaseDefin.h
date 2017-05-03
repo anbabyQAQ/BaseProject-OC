@@ -42,6 +42,8 @@
 
 
 #define FirstLogin  @"firstlogin"
+#define BANotioKey_LoginFinish   @"BANotioKey_LoginFinish"
+
 
 #endif /* BaseDefin_h */
 

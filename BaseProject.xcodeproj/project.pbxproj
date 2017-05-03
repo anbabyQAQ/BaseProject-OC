@@ -103,6 +103,16 @@
 		3C7A4D191EB2E81700F7BE27 /* BAAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A4D161EB2E81700F7BE27 /* BAAlertView.m */; };
 		3C7A4D1A1EB2E81700F7BE27 /* BAModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A4D181EB2E81700F7BE27 /* BAModal.m */; };
 		3C7A4D1E1EB3201900F7BE27 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A4D1D1EB3201900F7BE27 /* ForgetPasswordViewController.m */; };
+		3C98F5A31EB9800400CC08AB /* BAProfileHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C98F5A21EB9800400CC08AB /* BAProfileHeadCell.m */; };
+		3C98F5B51EB9C7E900CC08AB /* MoreExpressionShops@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5AC1EB9C7E900CC08AB /* MoreExpressionShops@2x.png */; };
+		3C98F5B61EB9C7E900CC08AB /* MoreExpressionShops@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5AD1EB9C7E900CC08AB /* MoreExpressionShops@3x.png */; };
+		3C98F5B71EB9C7E900CC08AB /* MoreMyBankCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5AE1EB9C7E900CC08AB /* MoreMyBankCard@2x.png */; };
+		3C98F5B81EB9C7E900CC08AB /* MoreMyBankCard@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5AF1EB9C7E900CC08AB /* MoreMyBankCard@3x.png */; };
+		3C98F5B91EB9C7E900CC08AB /* MoreMyFavorites@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5B01EB9C7E900CC08AB /* MoreMyFavorites@2x.png */; };
+		3C98F5BA1EB9C7E900CC08AB /* MoreMyFavorites@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5B11EB9C7E900CC08AB /* MoreMyFavorites@3x.png */; };
+		3C98F5BB1EB9C7E900CC08AB /* MoreSetting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5B21EB9C7E900CC08AB /* MoreSetting@2x.png */; };
+		3C98F5BC1EB9C7E900CC08AB /* MoreSetting@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5B31EB9C7E900CC08AB /* MoreSetting@3x.png */; };
+		3C98F5BD1EB9C7E900CC08AB /* MyCardPackageIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98F5B41EB9C7E900CC08AB /* MyCardPackageIcon@2x.png */; };
 		3CD563451EB198E0008727B3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD563441EB198E0008727B3 /* LoginViewController.m */; };
 		3CD563481EB1C870008727B3 /* yanjing.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3CD563471EB1C870008727B3 /* yanjing.jpg */; };
 		3CE5D5041EB32EB2001E0141 /* BAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE5D4F11EB32EB2001E0141 /* BAHomeViewController.m */; };
@@ -306,6 +316,17 @@
 		3C7A4D181EB2E81700F7BE27 /* BAModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAModal.m; sourceTree = "<group>"; };
 		3C7A4D1C1EB3201900F7BE27 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		3C7A4D1D1EB3201900F7BE27 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
+		3C98F5A11EB9800400CC08AB /* BAProfileHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAProfileHeadCell.h; sourceTree = "<group>"; };
+		3C98F5A21EB9800400CC08AB /* BAProfileHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAProfileHeadCell.m; sourceTree = "<group>"; };
+		3C98F5AC1EB9C7E900CC08AB /* MoreExpressionShops@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreExpressionShops@2x.png"; sourceTree = "<group>"; };
+		3C98F5AD1EB9C7E900CC08AB /* MoreExpressionShops@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreExpressionShops@3x.png"; sourceTree = "<group>"; };
+		3C98F5AE1EB9C7E900CC08AB /* MoreMyBankCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreMyBankCard@2x.png"; sourceTree = "<group>"; };
+		3C98F5AF1EB9C7E900CC08AB /* MoreMyBankCard@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreMyBankCard@3x.png"; sourceTree = "<group>"; };
+		3C98F5B01EB9C7E900CC08AB /* MoreMyFavorites@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreMyFavorites@2x.png"; sourceTree = "<group>"; };
+		3C98F5B11EB9C7E900CC08AB /* MoreMyFavorites@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreMyFavorites@3x.png"; sourceTree = "<group>"; };
+		3C98F5B21EB9C7E900CC08AB /* MoreSetting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreSetting@2x.png"; sourceTree = "<group>"; };
+		3C98F5B31EB9C7E900CC08AB /* MoreSetting@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreSetting@3x.png"; sourceTree = "<group>"; };
+		3C98F5B41EB9C7E900CC08AB /* MyCardPackageIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyCardPackageIcon@2x.png"; sourceTree = "<group>"; };
 		3CD563431EB198E0008727B3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3CD563441EB198E0008727B3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		3CD563471EB1C870008727B3 /* yanjing.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yanjing.jpg; sourceTree = "<group>"; };
@@ -789,6 +810,31 @@
 			path = BAAlert;
 			sourceTree = "<group>";
 		};
+		3C98F5A01EB97FE500CC08AB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3C98F5A11EB9800400CC08AB /* BAProfileHeadCell.h */,
+				3C98F5A21EB9800400CC08AB /* BAProfileHeadCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3C98F5AB1EB9C7D800CC08AB /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				3C98F5AC1EB9C7E900CC08AB /* MoreExpressionShops@2x.png */,
+				3C98F5AD1EB9C7E900CC08AB /* MoreExpressionShops@3x.png */,
+				3C98F5AE1EB9C7E900CC08AB /* MoreMyBankCard@2x.png */,
+				3C98F5AF1EB9C7E900CC08AB /* MoreMyBankCard@3x.png */,
+				3C98F5B01EB9C7E900CC08AB /* MoreMyFavorites@2x.png */,
+				3C98F5B11EB9C7E900CC08AB /* MoreMyFavorites@3x.png */,
+				3C98F5B21EB9C7E900CC08AB /* MoreSetting@2x.png */,
+				3C98F5B31EB9C7E900CC08AB /* MoreSetting@3x.png */,
+				3C98F5B41EB9C7E900CC08AB /* MyCardPackageIcon@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		3CD563421EB198C9008727B3 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -862,6 +908,8 @@
 		3CE5D5011EB32EB2001E0141 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				3C98F5AB1EB9C7D800CC08AB /* Images */,
+				3C98F5A01EB97FE500CC08AB /* Views */,
 				3CE5D5021EB32EB2001E0141 /* BAProfileViewController.h */,
 				3CE5D5031EB32EB2001E0141 /* BAProfileViewController.m */,
 			);
@@ -1012,24 +1060,33 @@
 			files = (
 				3CE5D50A1EB32EB2001E0141 /* navigationbar_back_highlighted@3x.png in Resources */,
 				3C65D9B71EADE2E1006D1186 /* tabbar_message_center@3x.png in Resources */,
+				3C98F5BD1EB9C7E900CC08AB /* MyCardPackageIcon@2x.png in Resources */,
 				3C1245771EA9EB6000462FC0 /* LaunchScreen.storyboard in Resources */,
+				3C98F5B71EB9C7E900CC08AB /* MoreMyBankCard@2x.png in Resources */,
 				3C65D9BC1EADE2E1006D1186 /* tabbar_profile@2x.png in Resources */,
 				3C1245741EA9EB6000462FC0 /* Assets.xcassets in Resources */,
 				3C65D9B81EADE2E1006D1186 /* Contents.json in Resources */,
 				3CD563481EB1C870008727B3 /* yanjing.jpg in Resources */,
+				3C98F5B61EB9C7E900CC08AB /* MoreExpressionShops@3x.png in Resources */,
+				3C98F5B51EB9C7E900CC08AB /* MoreExpressionShops@2x.png in Resources */,
 				3CE5D5071EB32EB2001E0141 /* navigationbar_back@3x.png in Resources */,
 				3CE5D50C1EB32EB2001E0141 /* navigationbar_background@2x.png in Resources */,
 				3CE5D5081EB32EB2001E0141 /* Contents.json in Resources */,
 				3C65D9AD1EADE2E1006D1186 /* tabbar_home_selected@2x.png in Resources */,
 				3C65D9B01EADE2E1006D1186 /* tabbar_home@2x.png in Resources */,
+				3C98F5B91EB9C7E900CC08AB /* MoreMyFavorites@2x.png in Resources */,
 				3CE5D50B1EB32EB2001E0141 /* Contents.json in Resources */,
 				3C65D9B91EADE2E1006D1186 /* tabbar_profile_selected@2x.png in Resources */,
 				3C1245721EA9EB6000462FC0 /* Main.storyboard in Resources */,
+				3C98F5B81EB9C7E900CC08AB /* MoreMyBankCard@3x.png in Resources */,
 				3C65D9BA1EADE2E1006D1186 /* tabbar_profile_selected@3x.png in Resources */,
+				3C98F5BC1EB9C7E900CC08AB /* MoreSetting@3x.png in Resources */,
 				3C65D9B21EADE2E1006D1186 /* Contents.json in Resources */,
 				3C65D9B31EADE2E1006D1186 /* tabbar_message_center_selected@2x.png in Resources */,
 				3C65D9B51EADE2E1006D1186 /* Contents.json in Resources */,
+				3C98F5BA1EB9C7E900CC08AB /* MoreMyFavorites@3x.png in Resources */,
 				3C65D9AC1EADE2E1006D1186 /* Contents.json in Resources */,
+				3C98F5BB1EB9C7E900CC08AB /* MoreSetting@2x.png in Resources */,
 				3C65D9AE1EADE2E1006D1186 /* tabbar_home_selected@3x.png in Resources */,
 				3C65D9AF1EADE2E1006D1186 /* Contents.json in Resources */,
 				3CE5D5101EB34457001E0141 /* index.html in Resources */,
@@ -1149,6 +1206,7 @@
 				3C613BBC1EAEF46400D11979 /* UIColor+BAKit.m in Sources */,
 				3C613BA61EAEF46400D11979 /* BATextView.m in Sources */,
 				3C613BA31EAEF46400D11979 /* BARegularExpression.m in Sources */,
+				3C98F5A31EB9800400CC08AB /* BAProfileHeadCell.m in Sources */,
 				3C613BC81EAEF46400D11979 /* UIViewController+BAAlertView.m in Sources */,
 				3C613BB91EAEF46400D11979 /* NSString+NSNumber.m in Sources */,
 				3C613BAA1EAEF46400D11979 /* NSDateFormatter+BAKit.m in Sources */,

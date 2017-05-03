@@ -15,9 +15,11 @@
 
 @end
 
-@interface BAWebViewController : BaseViewController<JSObjcDelegate>
+@interface BAWebViewController : UIViewController<JSObjcDelegate>
 
 @property (nonatomic, strong) NSString *urlString;
 @property (nonatomic, strong) JSContext *jsContext;
+
+- (void)loadRequest:(NSString *)url;
 
 @end
